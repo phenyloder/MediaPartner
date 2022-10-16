@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="favicon" type="image/webp" href="./images/reel.webp">
+    <link rel="icon" type="image/x-icon" href="./images/reel.svg">
     <link rel="stylesheet" href="./css/index.css">
     <title>MediaPartner</title>
 </head>
@@ -16,8 +16,9 @@
     </div>
     <div class="main-content">
         <div class="upload-section">
-            <input type="file" name="inputBox" id="fileInput">
+            <input type="file" name="inputBox" id="fileInput" accept=".txt">
             <label for="fileInput" class="upload-btn">Upload TXT File</label>
+            <div class="fileName"></div>
             <div class="btn-section">
                 <div class="msg">Select The Voice Type</div>
                 <div class="voice-btn">
@@ -30,5 +31,6 @@
     <div class="footer">
         Handcrafted With ❤️ By Phenyloder
     </div>
+    <script src="../js/index.js"></script>
 </body>
 </html>
