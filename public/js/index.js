@@ -2,7 +2,6 @@ const fileInput = document.getElementById("fileInput");
 const fileName = document.querySelector(".fileName");
 const maleSpeech = document.querySelector(".sub-voice.male");
 const femaleSpeech = document.querySelector(".sub-voice.female");
-const reader = new FileReader();
 
 fileInput.addEventListener('change',()=>{
     let name = fileInput.files[0].name;
@@ -11,7 +10,55 @@ fileInput.addEventListener('change',()=>{
 
 
 maleSpeech.addEventListener('click',()=>{
-    reader.readAsText(fileInput.files[0]);
+    if(fileInput.files.length===0){
+        alert("Please select a file first!")
+        return
+    }
 
-    console.log(reader.result);
+    let file = fileInput.files[0]
+
+    let formData = new FormData()
+    formData.set('file', file)
+
+    axios.post("/uploadFile", formData, {
+        headers: {
+            'speech-type':'male'
+        },
+        onUploadProgress: ProgressEvent => {
+            const percentCompleted = Math.round(
+                (ProgressEvent.loaded * 100)/(ProgressEvent.total)
+            );
+            console.log(`Uploading: ${percentCompleted}%`);
+        }
+    })
+    .then(res => {
+        console.log(res.data)
+    })
+})
+
+femaleSpeech.addEventListener('click',()=>{
+    if(fileInput.files.length===0){
+        alert("Please select a file first!")
+        return
+    }
+
+    let file = fileInput.files[0]
+
+    let formData = new FormData()
+    formData.set('file', file)
+
+    axios.post("/uploadFile", formData, {
+        headers: {
+            'speech-type':'female'
+        },
+        onUploadProgress: ProgressEvent => {
+            const percentCompleted = Math.round(
+                (ProgressEvent.loaded * 100)/(ProgressEvent.total)
+            );
+            console.log(`Uploading: ${percentCompleted}%`);
+        }
+    })
+    .then(res => {
+        console.log(res.data)
+    })
 })

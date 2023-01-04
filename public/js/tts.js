@@ -1,10 +1,10 @@
 var sdk = require("microsoft-cognitiveservices-speech-sdk");
 var fs = require("fs");
 
-function synthesizeMaleSpeech(txtPath) {
+function synthesizeMaleSpeech(txtPath, fileName) {
     const speechConfig = sdk.SpeechConfig.fromSubscription("8119c6ce5a414f6188b8acbe21aad507", "centralindia");
     speechConfig.speechSynthesisVoiceName = "en-US-GuyNeural";
-    const audioConfig = sdk.AudioConfig.fromAudioFileOutput("path-to-file-m.wav");
+    const audioConfig = sdk.AudioConfig.fromAudioFileOutput(`outputAudio/${fileName}-male.wav`);
 
     const synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
 
@@ -15,7 +15,7 @@ function synthesizeMaleSpeech(txtPath) {
             synthesizer.close();
             if (result) {
                 // return result as stream
-                return fs.createReadStream("path-to-file-m.wav");
+                return fs.createReadStream(`outputAudio/${fileName}-male.wav`);
             }
         },
         error => {
@@ -24,9 +24,9 @@ function synthesizeMaleSpeech(txtPath) {
         });
 }
 
-function synthesizeFemaleSpeech() {
+function synthesizeFemaleSpeech(txtPath, fileName) {
     const speechConfig = sdk.SpeechConfig.fromSubscription("8119c6ce5a414f6188b8acbe21aad507", "centralindia");
-    const audioConfig = sdk.AudioConfig.fromAudioFileOutput("path-to-file-f.wav");
+    const audioConfig = sdk.AudioConfig.fromAudioFileOutput(`outputAudio/${fileName}-female.wav`);
 
     const synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
 
@@ -37,7 +37,7 @@ function synthesizeFemaleSpeech() {
             synthesizer.close();
             if (result) {
                 // return result as stream
-                return fs.createReadStream("path-to-file-f.wav");
+                return fs.createReadStream(`outputAudio/${fileName}-female.wav`);
             }
         },
         error => {
@@ -46,4 +46,4 @@ function synthesizeFemaleSpeech() {
         });
 }
 
-export {synthesizeMaleSpeech, synthesizeFemaleSpeech};
+exports.speech = {synthesizeMaleSpeech, synthesizeFemaleSpeech};
