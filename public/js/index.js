@@ -33,6 +33,7 @@ maleSpeech.addEventListener('click',()=>{
     })
     .then(res => {
         console.log(res.data)
+        window.open("/downloadFile/maleSpeech")
     })
 })
 
@@ -60,5 +61,6 @@ femaleSpeech.addEventListener('click',()=>{
     })
     .then(res => {
         console.log(res.data)
+        window.open("/downloadFile/femaleSpeech")
     })
 })

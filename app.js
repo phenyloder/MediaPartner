@@ -27,22 +27,31 @@ const uploadHandler = multer({
     }
 })
 
-app.post("/uploadFile", uploadHandler.single('file') , (req, res) => {
+let fileName = "";
+
+app.post("/uploadFile", uploadHandler.single('file') ,async (req, res) => {
     const filePath = req.file.path
-    const fileName = req.file.originalname.slice(0,-4)
+    fileName = req.file.originalname.slice(0,-4)
     if(req.headers["speech-type"]==="male"){
-        maleSpeech(filePath, fileName)
-        res.download(`${folderPath}/${fileName}-male.wav`, (err) => {
-            console.log(err);
-        })
+        await maleSpeech(filePath, fileName)
     }
     if(req.headers["speech-type"]==="female"){
-        femaleSpeech(filePath, fileName);
-        res.download(`${folderPath}/${fileName}-female.wav`, (err) => {
-            console.log(err);
-        })
+        await femaleSpeech(filePath, fileName);
     }
     res.sendStatus(200)
+})
+
+app.get("/downloadFile/:speechType", (req, res) => {
+    const sType = req.params.speechType;
+    if(sType==="maleSpeech"){
+        res.download(`${folderPath}/${fileName}-male.wav`, (err) => {
+            console.log(err);
+        });
+    }else if(sType==="femaleSpeech"){
+        res.download(`${folderPath}/${fileName}-female.wav`, (err) => {
+            console.log(err);
+        });
+    }
 })
 
 app.listen(port, () => {
